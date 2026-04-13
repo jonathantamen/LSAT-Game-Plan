@@ -18,3 +18,12 @@ View your app in AI Studio: https://ai.studio/apps/ec9f4cc7-963e-4094-bd0c-bee85
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Build and Host Locally (e.g., with http-server)
+
+To build the app for production and host it locally, you can use the `http-server` package:
+
+1. Build the project:
+   `npm run build`
+2. Serve the compiled output in the `dist` folder:
+   `npx http-server dist`
