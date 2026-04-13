@@ -1,10 +1,9 @@
 {
-  "projectId": "gen-lang-client-0227289190",
-  "appId": "1:756351084117:web:39e937f4c61177acb556dc",
-  "apiKey": "AIzaSyB236IlaO43KSqmkgd-pZbN87-5shzjiy0",
-  "authDomain": "gen-lang-client-0227289190.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-ec9f4cc7-963e-4094-bd0c-bee858730bd4",
-  "storageBucket": "gen-lang-client-0227289190.firebasestorage.app",
-  "messagingSenderId": "756351084117",
-  "measurementId": ""
+  "apiKey": "AIzaSyBd9F1D8D0sRR1vrHK4uqM55tOR1RlE60Q",
+  "authDomain": "lsat-game-plan.firebaseapp.com",
+  "projectId": "lsat-game-plan",
+  "storageBucket": "lsat-game-plan.firebasestorage.app",
+  "messagingSenderId": "30144172543",
+  "appId": "1:30144172543:web:2cb2c49eff2d659fcd17ca",
+  "measurementId": "G-E310CN0195"
 }
