@@ -225,16 +225,20 @@ export function TutorDashboard() {
                 </div>
                 <p className="text-sm text-slate-500 line-clamp-1">{task.description}</p>
               </div>
-              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
                 <button
+                  aria-label="Edit task"
+                  title="Edit task"
                   onClick={() => startEdit(task)}
-                  className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                  className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500 rounded-lg transition-all"
                 >
                   <Edit2 className="h-5 w-5" />
                 </button>
                 <button
+                  aria-label="Delete task"
+                  title="Delete task"
                   onClick={() => handleDelete(task.id)}
-                  className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                  className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-red-500 rounded-lg transition-all"
                 >
                   <Trash2 className="h-5 w-5" />
                 </button>
