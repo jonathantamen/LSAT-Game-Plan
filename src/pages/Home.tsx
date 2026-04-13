@@ -10,13 +10,13 @@ export function Home() {
 
   if (loading) return null;
   if (user && profile) {
-    return <Navigate to={profile.role === 'tutor' ? '/tutor' : '/student'} replace />;
+    return <Navigate to={profile.role === 'admin' ? '/tutor' : '/student'} replace />;
   }
 
-  const handleSignIn = async (role: 'tutor' | 'student') => {
+  const handleSignIn = async () => {
     try {
-      await signIn(role);
-      navigate(role === 'tutor' ? '/tutor' : '/student');
+      await signIn();
+      navigate('/student');
     } catch (error) {
       console.error('Sign in failed:', error);
     }
@@ -46,7 +46,7 @@ export function Home() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => handleSignIn('student')}
+            onClick={handleSignIn}
             className="flex items-center gap-3 bg-blue-600 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all"
           >
             Start Studying Now
