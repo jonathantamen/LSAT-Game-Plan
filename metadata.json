@@ -1,0 +1,5 @@
+{
+  "name": "StudySync",
+  "description": "A collaborative study plan application where tutors can assign tasks and students can track their progress in a clean, to-do list interface.",
+  "requestFramePermissions": []
+}
