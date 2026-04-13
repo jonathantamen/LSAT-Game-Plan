@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { collection, query, onSnapshot, orderBy, doc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
@@ -65,11 +65,15 @@ export function StudentDashboard() {
 
   const progress = tasks.length > 0 ? Math.round((completedTaskIds.size / tasks.length) * 100) : 0;
 
-  const categories = ['All', ...Array.from(new Set(tasks.map(t => t.category || 'Uncategorized'))).filter(Boolean)];
+  const categories = useMemo(() => {
+    return ['All', ...Array.from(new Set(tasks.map(t => t.category || 'Uncategorized'))).filter(Boolean)];
+  }, [tasks]);
   
-  const filteredTasks = selectedCategory === 'All' 
-    ? tasks 
-    : tasks.filter(t => (t.category || 'Uncategorized') === selectedCategory);
+  const filteredTasks = useMemo(() => {
+    return selectedCategory === 'All'
+      ? tasks
+      : tasks.filter(t => (t.category || 'Uncategorized') === selectedCategory);
+  }, [tasks, selectedCategory]);
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
