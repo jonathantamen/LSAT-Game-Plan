@@ -28,7 +28,7 @@ export default function App() {
             <Route 
               path="/student" 
               element={
-                <AuthGuard allowedRole="student">
+                <AuthGuard>
                   <StudentDashboard />
                 </AuthGuard>
               } 
