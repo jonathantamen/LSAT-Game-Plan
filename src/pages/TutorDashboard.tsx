@@ -3,7 +3,8 @@ import { collection, query, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc,
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
 import { Task } from '../types';
-import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout } from 'lucide-react';
+import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'react-hot-toast';
 
@@ -12,7 +13,7 @@ export function TutorDashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const [formData, setFormData] = useState({ title: '', description: '', category: '' });
+  const [formData, setFormData] = useState({ title: '', description: '', category: '', linkUrl: '', linkText: '' });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,12 +33,20 @@ export function TutorDashboard() {
     try {
       if (editingTask) {
         await updateDoc(doc(db, 'tasks', editingTask.id), {
-          ...formData,
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          linkUrl: formData.linkUrl,
+          linkText: formData.linkText
         });
         toast.success('Task updated');
       } else {
         await addDoc(collection(db, 'tasks'), {
-          ...formData,
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          linkUrl: formData.linkUrl,
+          linkText: formData.linkText,
           order: tasks.length,
           createdAt: serverTimestamp(),
         });
@@ -64,28 +73,43 @@ export function TutorDashboard() {
 
   const startEdit = (task: Task) => {
     setEditingTask(task);
-    setFormData({ title: task.title, description: task.description || '', category: task.category || '' });
+    setFormData({ 
+      title: task.title, 
+      description: task.description || '', 
+      category: task.category || '',
+      linkUrl: task.linkUrl || '',
+      linkText: task.linkText || ''
+    });
     setIsAdding(true);
   };
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-slate-900">LSAT Guide Manager</h2>
           <p className="text-slate-500 mt-1">Curate the master study plan for all students.</p>
         </div>
-        <button
-          onClick={() => {
-            setIsAdding(true);
-            setEditingTask(null);
-            setFormData({ title: '', description: '', category: '' });
-          }}
-          className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center gap-2"
-        >
-          <Plus className="h-5 w-5" />
-          Add Lesson
-        </button>
+        <div className="flex items-center gap-3">
+          <Link
+            to="/student"
+            className="bg-white text-slate-700 border border-slate-200 px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 transition-all flex items-center gap-2"
+          >
+            <Eye className="h-5 w-5" />
+            View as Student
+          </Link>
+          <button
+            onClick={() => {
+              setIsAdding(true);
+              setEditingTask(null);
+              setFormData({ title: '', description: '', category: '', linkUrl: '', linkText: '' });
+            }}
+            className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center gap-2"
+          >
+            <Plus className="h-5 w-5" />
+            Add Lesson
+          </button>
+        </div>
       </header>
 
       <AnimatePresence>
@@ -109,7 +133,7 @@ export function TutorDashboard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700">Category</label>
+                  <label className="text-sm font-bold text-slate-700">Section / Category</label>
                   <input
                     type="text"
                     placeholder="e.g., Logical Reasoning"
@@ -120,12 +144,35 @@ export function TutorDashboard() {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">Description / Content</label>
+                <label className="text-sm font-bold text-slate-700">Content / Reading Material</label>
                 <textarea
+                  placeholder="Add paragraphs of text for the student to read..."
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none min-h-[150px]"
                   value={formData.description}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
                 />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700">External Link URL (Optional)</label>
+                  <input
+                    type="url"
+                    placeholder="https://lawhub.lsac.org/..."
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                    value={formData.linkUrl}
+                    onChange={e => setFormData({ ...formData, linkUrl: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700">Link Button Text</label>
+                  <input
+                    type="text"
+                    placeholder="e.g., Go to LawHub"
+                    className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                    value={formData.linkText}
+                    onChange={e => setFormData({ ...formData, linkText: e.target.value })}
+                  />
+                </div>
               </div>
               <div className="flex justify-end gap-3">
                 <button

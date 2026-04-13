@@ -15,6 +15,8 @@ export interface Task {
   title: string;
   description?: string;
   category?: string;
+  linkUrl?: string;
+  linkText?: string;
   order: number;
   createdAt: Timestamp;
 }

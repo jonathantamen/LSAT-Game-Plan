@@ -21,6 +21,8 @@
         "title": { "type": "string" },
         "description": { "type": "string" },
         "category": { "type": "string" },
+        "linkUrl": { "type": "string" },
+        "linkText": { "type": "string" },
         "order": { "type": "number" },
         "createdAt": { "type": "string", "format": "date-time" }
       },
