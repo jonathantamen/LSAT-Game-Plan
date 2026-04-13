@@ -93,8 +93,15 @@ export function TutorDashboard() {
 
     const escapeCSV = (str: string | undefined) => {
       if (!str) return '';
+
+      // Prevent CSV Injection by prefixing potentially dangerous characters with a single quote
+      let sanitizedStr = str;
+      if (/^[=+\-@\t\r]/.test(sanitizedStr)) {
+        sanitizedStr = "'" + sanitizedStr;
+      }
+
       // Escape double quotes by doubling them, and wrap in double quotes if it contains commas, newlines, or double quotes
-      const escapedStr = str.replace(/"/g, '""');
+      const escapedStr = sanitizedStr.replace(/"/g, '""');
       if (escapedStr.search(/("|,|\n)/g) >= 0) {
         return `"${escapedStr}"`;
       }
