@@ -3,7 +3,7 @@ import { collection, query, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc,
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
 import { Task } from '../types';
-import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye } from 'lucide-react';
+import { Plus, Trash2, Edit2, GripVertical, Layout, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'react-hot-toast';
