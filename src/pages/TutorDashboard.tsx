@@ -3,7 +3,7 @@ import { collection, query, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc,
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
 import { Task } from '../types';
-import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye } from 'lucide-react';
+import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'react-hot-toast';
@@ -81,6 +81,45 @@ export function TutorDashboard() {
       linkText: task.linkText || ''
     });
     setIsAdding(true);
+  };
+
+  const exportToCSV = () => {
+    if (tasks.length === 0) {
+      toast.error('No tasks to export');
+      return;
+    }
+
+    const headers = ['Title', 'Description', 'Category', 'LinkUrl', 'LinkText'];
+
+    const escapeCSV = (str: string | undefined) => {
+      if (!str) return '';
+      // Escape double quotes by doubling them, and wrap in double quotes if it contains commas, newlines, or double quotes
+      const escapedStr = str.replace(/"/g, '""');
+      if (escapedStr.search(/("|,|\n)/g) >= 0) {
+        return `"${escapedStr}"`;
+      }
+      return escapedStr;
+    };
+
+    const csvRows = tasks.map(task => [
+      escapeCSV(task.title),
+      escapeCSV(task.description),
+      escapeCSV(task.category),
+      escapeCSV(task.linkUrl),
+      escapeCSV(task.linkText)
+    ].join(','));
+
+    const csvString = [headers.join(','), ...csvRows].join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'lsat_guide_tasks.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success('Tasks exported to CSV');
   };
 
   return (
@@ -242,6 +281,16 @@ export function TutorDashboard() {
             </div>
           ))
         )}
+      </div>
+
+      <div className="flex justify-end pt-8">
+        <button
+          onClick={exportToCSV}
+          className="bg-white text-slate-700 border border-slate-200 px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 transition-all flex items-center gap-2"
+        >
+          <Download className="h-5 w-5" />
+          Export to CSV
+        </button>
       </div>
     </div>
   );
