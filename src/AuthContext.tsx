@@ -8,7 +8,7 @@ interface AuthContextType {
   user: User | null;
   profile: UserProfile | null;
   loading: boolean;
-  signIn: (role: UserRole) => Promise<void>;
+  signIn: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return unsubscribe;
   }, []);
 
-  const signIn = async (role: UserRole) => {
+  const signIn = async () => {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
@@ -46,28 +46,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const docRef = doc(db, 'users', user.uid);
     const docSnap = await getDoc(docRef);
 
-    // Hardcoded admin check
-    const assignedRole = user.email === 'jonathan.tamen@gmail.com' ? 'admin' : 'student';
-
     if (!docSnap.exists()) {
       const newProfile: UserProfile = {
         uid: user.uid,
         email: user.email!,
         displayName: user.displayName,
-        role: assignedRole,
+        role: 'student',
         createdAt: serverTimestamp() as any,
       };
       await setDoc(docRef, newProfile);
       setProfile(newProfile);
     } else {
-      const existingProfile = docSnap.data() as UserProfile;
-      // Ensure admin role is updated if email matches
-      if (existingProfile.role !== assignedRole) {
-        await setDoc(docRef, { ...existingProfile, role: assignedRole }, { merge: true });
-        setProfile({ ...existingProfile, role: assignedRole });
-      } else {
-        setProfile(existingProfile);
-      }
+      setProfile(docSnap.data() as UserProfile);
     }
   };
 
