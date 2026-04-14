@@ -88,7 +88,14 @@ export function StudentDashboard() {
               <div className="text-sm font-bold text-slate-400 uppercase tracking-widest">Your Progress</div>
               <div className="text-4xl font-black text-blue-600">{progress}%</div>
             </div>
-            <div className="w-32 h-3 bg-slate-100 rounded-full overflow-hidden">
+            <div
+              className="w-32 h-3 bg-slate-100 rounded-full overflow-hidden"
+              role="progressbar"
+              aria-label="Study progress"
+              aria-valuenow={progress}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}

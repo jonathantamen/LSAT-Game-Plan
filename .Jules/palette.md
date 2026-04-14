@@ -4,3 +4,6 @@
 ## 2024-04-13 - [StudentDashboard] Icon-only Task Toggle Buttons
 **Learning:** Icon-only buttons used for toggling task states (complete/incomplete) lacked semantic meaning for screen readers and tooltips for sighted users. They also lacked visible focus states, hindering keyboard navigation.
 **Action:** Always pair icon-only interactive elements with dynamic `aria-label` and `title` attributes that reflect the current state. Include `focus-visible` ring utilities (e.g., `focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500`) to ensure robust keyboard accessibility.
+## 2026-04-14 - [TutorDashboard/StudentDashboard] Form Accessibility & Semantic Roles
+**Learning:** Form labels must be explicitly linked to inputs using `htmlFor` and `id` for screen readers to properly announce them. Additionally, generic `div` elements used as progress indicators require `role="progressbar"` and ARIA attributes (`aria-valuenow`, `aria-valuemin`, `aria-valuemax`) to be semantically understood by assistive technologies.
+**Action:** Always map `<label>` elements to their corresponding inputs/textareas using matching `htmlFor` and `id` attributes. Apply appropriate ARIA roles and values to custom UI components like progress bars.
