@@ -169,8 +169,9 @@ export function TutorDashboard() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700">Title</label>
+                  <label htmlFor="task-title" className="text-sm font-bold text-slate-700">Title <span className="text-red-500" aria-hidden="true">*</span></label>
                   <input
+                    id="task-title"
                     type="text"
                     required
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -179,8 +180,9 @@ export function TutorDashboard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700">Section / Category</label>
+                  <label htmlFor="task-category" className="text-sm font-bold text-slate-700">Section / Category</label>
                   <input
+                    id="task-category"
                     type="text"
                     placeholder="e.g., Logical Reasoning"
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -190,8 +192,9 @@ export function TutorDashboard() {
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">Content / Reading Material</label>
+                <label htmlFor="task-description" className="text-sm font-bold text-slate-700">Content / Reading Material</label>
                 <textarea
+                  id="task-description"
                   placeholder="Add paragraphs of text for the student to read..."
                   className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none min-h-[150px]"
                   value={formData.description}
@@ -200,8 +203,9 @@ export function TutorDashboard() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700">External Link URL (Optional)</label>
+                  <label htmlFor="task-link-url" className="text-sm font-bold text-slate-700">External Link URL (Optional)</label>
                   <input
+                    id="task-link-url"
                     type="url"
                     placeholder="https://lawhub.lsac.org/..."
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
@@ -210,8 +214,9 @@ export function TutorDashboard() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-slate-700">Link Button Text</label>
+                  <label htmlFor="task-link-text" className="text-sm font-bold text-slate-700">Link Button Text</label>
                   <input
+                    id="task-link-text"
                     type="text"
                     placeholder="e.g., Go to LawHub"
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none"
