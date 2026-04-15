@@ -26,3 +26,11 @@ export interface UserProgress {
   taskId: string;
   completedAt: Timestamp;
 }
+
+export interface Resource {
+  id: string;
+  title: string;
+  fileUrl: string;
+  fileName?: string;
+  createdAt: Timestamp;
+}
