@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo '{"apiKey":"mock","authDomain":"mock","projectId":"mock","storageBucket":"mock","messagingSenderId":"mock","appId":"mock","firestoreDatabaseId":"mock"}' > firebase-applet-config.json
+      - run: echo '{"projectId":"lsat-game-plan","appId":"1:30144172543:web:2cb2c49eff2d659fcd17ca","storageBucket":"lsat-game-plan.firebasestorage.app","apiKey":"AIzaSyBd9F1D8D0sRR1vrHK4uqM55tOR1RlE60Q","authDomain":"lsat-game-plan.firebaseapp.com","messagingSenderId":"30144172543","measurementId":"G-E310CN0195","projectNumber":"30144172543","firestoreDatabaseId":"(default)"}' > firebase-applet-config.json
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
