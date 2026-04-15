@@ -13,14 +13,7 @@ export function Home() {
     return <Navigate to={profile.role === 'admin' ? '/tutor' : '/student'} replace />;
   }
 
-  const handleSignIn = async () => {
-    try {
-      await signIn();
-      navigate('/student');
-    } catch (error) {
-      console.error('Sign in failed:', error);
-    }
-  };
+
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -46,10 +39,10 @@ export function Home() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={handleSignIn}
+            onClick={() => navigate('/student')}
             className="flex items-center gap-3 bg-blue-600 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all"
           >
-            Start Studying Now
+            View Study Guide
             <ArrowRight className="h-6 w-6" />
           </motion.button>
         </div>

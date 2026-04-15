@@ -21,21 +21,35 @@ export function StudentDashboard() {
   useEffect(() => {
     // Listen to global tasks
     const tasksQuery = query(collection(db, 'tasks'), orderBy('order', 'asc'));
-    const unsubscribeTasks = onSnapshot(tasksQuery, (snapshot) => {
-      const tasksData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Task));
-      setTasks(tasksData);
-      if (!user) setLoading(false);
-    });
+    const unsubscribeTasks = onSnapshot(
+      tasksQuery, 
+      (snapshot) => {
+        const tasksData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Task));
+        setTasks(tasksData);
+        if (!user) setLoading(false);
+      },
+      (error) => {
+        console.error("Error fetching tasks:", error);
+        if (!user) setLoading(false);
+      }
+    );
 
     let unsubscribeProgress: () => void;
     if (user) {
       // Listen to user's personal progress
       const progressRef = collection(db, 'users', user.uid, 'progress');
-      unsubscribeProgress = onSnapshot(progressRef, (snapshot) => {
-        const completedIds = new Set(snapshot.docs.map(doc => doc.id));
-        setCompletedTaskIds(completedIds);
-        setLoading(false);
-      });
+      unsubscribeProgress = onSnapshot(
+        progressRef, 
+        (snapshot) => {
+          const completedIds = new Set(snapshot.docs.map(doc => doc.id));
+          setCompletedTaskIds(completedIds);
+          setLoading(false);
+        },
+        (error) => {
+          console.error("Error fetching progress:", error);
+          setLoading(false);
+        }
+      );
     } else {
       setCompletedTaskIds(new Set());
     }
