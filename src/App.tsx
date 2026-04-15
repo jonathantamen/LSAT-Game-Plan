@@ -6,7 +6,7 @@ import { AuthGuard } from './components/AuthGuard';
 import { Home } from './pages/Home';
 import { TutorDashboard } from './pages/TutorDashboard';
 import { StudentDashboard } from './pages/StudentDashboard';
-import { Resources } from './pages/Resources';
+
 import { Toaster } from 'react-hot-toast';
 
 export default function App() {
@@ -30,13 +30,6 @@ export default function App() {
               path="/student"
               element={
                 <StudentDashboard />
-              }
-            />
-
-            <Route
-              path="/resources"
-              element={
-                <Resources />
               }
             />
 
