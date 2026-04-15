@@ -223,7 +223,7 @@ export function StudentDashboard() {
                         </div>
                       )}
 
-                      {task.linkUrl && (
+                      {task.linkUrl && (task.linkUrl.startsWith('http://') || task.linkUrl.startsWith('https://')) && (
                         <div className="pt-2">
                           <a 
                             href={task.linkUrl} 
