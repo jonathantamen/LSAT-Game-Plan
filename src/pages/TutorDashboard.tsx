@@ -3,7 +3,7 @@ import { collection, query, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc,
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
 import { Task } from '../types';
-import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye, Download } from 'lucide-react';
+import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye, Download, Upload } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'react-hot-toast';
@@ -52,7 +52,7 @@ export function TutorDashboard() {
         });
         toast.success('Task added to guide');
       }
-      setFormData({ title: '', description: '', category: '' });
+      setFormData({ title: '', description: '', category: '', linkUrl: '', linkText: '' });
       setIsAdding(false);
       setEditingTask(null);
     } catch (error) {
@@ -192,11 +192,36 @@ export function TutorDashboard() {
                 </div>
               </div>
               <div className="space-y-2">
-                <label htmlFor="task-description" className="text-sm font-bold text-slate-700">Content / Reading Material</label>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-bold text-slate-700">Content / Reading Material (Markdown Supported)</label>
+                  <label className="cursor-pointer text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 bg-blue-50 px-3 py-1 rounded-lg transition-colors">
+                    <Upload className="h-4 w-4" />
+                    Upload .md File
+                    <input
+                      type="file"
+                      accept=".md,text/markdown"
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                          const text = event.target?.result;
+                          if (typeof text === 'string') {
+                            setFormData(prev => ({ ...prev, description: text }));
+                            toast.success('Markdown file loaded');
+                          }
+                        };
+                        reader.readAsText(file);
+                        // Reset input so the same file can be uploaded again if needed
+                        e.target.value = '';
+                      }}
+                    />
+                  </label>
+                </div>
                 <textarea
-                  id="task-description"
-                  placeholder="Add paragraphs of text for the student to read..."
-                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none min-h-[150px]"
+                  placeholder="Add paragraphs of text or use Markdown for the student to read..."
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none min-h-[150px] font-mono text-sm"
                   value={formData.description}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
                 />

@@ -6,6 +6,7 @@ import { AuthGuard } from './components/AuthGuard';
 import { Home } from './pages/Home';
 import { TutorDashboard } from './pages/TutorDashboard';
 import { StudentDashboard } from './pages/StudentDashboard';
+
 import { Toaster } from 'react-hot-toast';
 
 export default function App() {
@@ -15,25 +16,23 @@ export default function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            
-            <Route 
-              path="/tutor" 
+
+            <Route
+              path="/tutor"
               element={
                 <AuthGuard allowedRole="admin">
                   <TutorDashboard />
                 </AuthGuard>
-              } 
+              }
             />
-            
-            <Route 
-              path="/student" 
+
+            <Route
+              path="/student"
               element={
-                <AuthGuard>
-                  <StudentDashboard />
-                </AuthGuard>
-              } 
+                <StudentDashboard />
+              }
             />
-            
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
