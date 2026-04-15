@@ -23,6 +23,13 @@ service cloud.firestore {
     //   - taskId: string (required)
     //   - completedAt: timestamp
     //
+    // Collection: resources
+    // Fields:
+    //   - title: string (required)
+    //   - fileUrl: string (required)
+    //   - fileName: string
+    //   - createdAt: timestamp
+    //
     // ===============================================================
 
     // Helper Functions
@@ -62,6 +69,13 @@ service cloud.firestore {
              data.taskId == taskId;
     }
 
+    function isValidResource(data) {
+      return data.keys().hasAll(['title', 'fileUrl']) &&
+             data.title is string && data.title.size() > 0 && data.title.size() < 500 &&
+             data.fileUrl is string && data.fileUrl.size() > 0 &&
+             (!('fileName' in data) || (data.fileName is string && data.fileName.size() < 255));
+    }
+
     // Rules
     match /users/{userId} {
       allow read: if isAuthenticated();
@@ -79,6 +93,11 @@ service cloud.firestore {
     match /tasks/{taskId} {
       allow read: if true;
       allow write: if isAdmin() && isValidTask(request.resource.data);
+    }
+
+    match /resources/{resourceId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin() && isValidResource(request.resource.data);
     }
   }
 }
