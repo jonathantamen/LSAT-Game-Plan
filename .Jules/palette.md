@@ -4,3 +4,7 @@
 ## 2024-04-13 - [StudentDashboard] Icon-only Task Toggle Buttons
 **Learning:** Icon-only buttons used for toggling task states (complete/incomplete) lacked semantic meaning for screen readers and tooltips for sighted users. They also lacked visible focus states, hindering keyboard navigation.
 **Action:** Always pair icon-only interactive elements with dynamic `aria-label` and `title` attributes that reflect the current state. Include `focus-visible` ring utilities (e.g., `focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500`) to ensure robust keyboard accessibility.
+
+## 2024-05-24 - [Add htmlFor attributes to inputs]
+**Learning:** Found an accessibility issue pattern specific to this app's components, where `<label>` elements were not explicitly linked to their corresponding `<input>` and `<textarea>` elements using matching `htmlFor` and `id` attributes. This could result in screen readers not announcing the field names correctly, and users not being able to click the labels to focus the inputs. Additionally, discovered that the "Title" field in `TutorDashboard.tsx` was marked as `required` without a visual required indicator, which could lead to confusion for users.
+**Action:** Added matching `id` and `htmlFor` attributes to form labels and inputs/textareas in `TutorDashboard.tsx`. Also added a visual required indicator (`*`) with `aria-hidden="true"` to the 'Title' label. Will ensure explicitly linking labels to inputs and adding required indicators where applicable in the future.
