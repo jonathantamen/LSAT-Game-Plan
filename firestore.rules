@@ -77,7 +77,7 @@ service cloud.firestore {
     }
 
     match /tasks/{taskId} {
-      allow read: if isAuthenticated();
+      allow read: if true;
       allow write: if isAdmin() && isValidTask(request.resource.data);
     }
   }
