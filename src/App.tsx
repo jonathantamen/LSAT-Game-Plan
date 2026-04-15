@@ -16,30 +16,30 @@ export default function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            
-            <Route 
-              path="/tutor" 
+
+            <Route
+              path="/tutor"
               element={
                 <AuthGuard allowedRole="admin">
                   <TutorDashboard />
                 </AuthGuard>
-              } 
+              }
             />
-            
-            <Route 
-              path="/student" 
+
+            <Route
+              path="/student"
               element={
                 <StudentDashboard />
-              } 
+              }
             />
-            
-            <Route 
-              path="/resources" 
+
+            <Route
+              path="/resources"
               element={
                 <Resources />
-              } 
+              }
             />
-            
+
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
