@@ -68,6 +68,16 @@ export function StudentDashboard() {
   const categories = useMemo(() => {
     return ['All', ...Array.from(new Set(tasks.map(t => t.category || 'Uncategorized'))).filter(Boolean)];
   }, [tasks]);
+
+  // ⚡ Bolt Optimization: Pre-compute category counts to avoid O(N*M) calculation in render loop
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    tasks.forEach(task => {
+      const category = task.category || 'Uncategorized';
+      counts[category] = (counts[category] || 0) + 1;
+    });
+    return counts;
+  }, [tasks]);
   
   const filteredTasks = useMemo(() => {
     return selectedCategory === 'All'
@@ -150,7 +160,7 @@ export function StudentDashboard() {
                   "text-xs py-0.5 px-2 rounded-full",
                   selectedCategory === category ? "bg-blue-500 text-white" : "bg-slate-100 text-slate-500"
                 )}>
-                  {tasks.filter(t => (t.category || 'Uncategorized') === category).length}
+                  {categoryCounts[category] || 0}
                 </span>
               )}
             </button>
