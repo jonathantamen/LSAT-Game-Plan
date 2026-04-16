@@ -86,18 +86,21 @@ service cloud.firestore {
 
       match /progress/{taskId} {
         allow read: if isOwner(userId);
-        allow write: if isOwner(userId) && isValidProgress(request.resource.data, userId, taskId);
+        allow create, update: if isOwner(userId) && isValidProgress(request.resource.data, userId, taskId);
+        allow delete: if isOwner(userId);
       }
     }
 
     match /tasks/{taskId} {
       allow read: if true;
-      allow write: if isAdmin() && isValidTask(request.resource.data);
+      allow create, update: if isAdmin() && isValidTask(request.resource.data);
+      allow delete: if isAdmin();
     }
 
     match /resources/{resourceId} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin() && isValidResource(request.resource.data);
+      allow create, update: if isAdmin() && isValidResource(request.resource.data);
+      allow delete: if isAdmin();
     }
   }
 }

@@ -7,10 +7,13 @@ coverage/
 .env*
 !.env.example
 firebase-applet-config.json
+
 # Added by ggshield
 .cache_ggshield
+
 .agents/
 .firebase/
 .Jules/
 /dist/
 /build/
+/LSAT Content

@@ -224,29 +224,21 @@ export function StudentDashboard() {
                       )}
                     </div>
                     
-                    {task.description && (
-                      <div className={cn(
-                        "prose prose-slate prose-blue max-w-none prose-p:leading-relaxed",
-                        isCompleted ? "opacity-60" : ""
-                      )}>
+                    {task.description && !isCompleted && (
+                      <div className="prose prose-slate prose-blue max-w-none prose-p:leading-relaxed">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {task.description}
                         </ReactMarkdown>
                       </div>
                     )}
 
-                    {task.linkUrl && (
+                    {task.linkUrl && !isCompleted && (
                       <div className="pt-2">
                         <a 
                           href={task.linkUrl} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className={cn(
-                            "inline-flex items-center gap-2 px-5 py-2.5 text-sm rounded-lg font-semibold transition-all",
-                            isCompleted 
-                              ? "bg-slate-100 text-slate-500 hover:bg-slate-200" 
-                              : "bg-slate-900 text-white hover:bg-blue-600 hover:shadow-sm"
-                          )}
+                          className="inline-flex items-center gap-2 px-5 py-2.5 text-sm rounded-lg font-semibold transition-all bg-slate-900 text-white hover:bg-blue-600 hover:shadow-sm"
                         >
                           {task.linkText || 'Open Link'}
                           <ExternalLink className="h-4 w-4" />
@@ -254,7 +246,10 @@ export function StudentDashboard() {
                       </div>
                     )}
 
-                    <div className="pt-4 mt-2 border-t border-slate-100 flex items-center gap-3">
+                    <div className={cn(
+                      "flex items-center gap-3",
+                      !isCompleted && "pt-4 mt-2 border-t border-slate-100"
+                    )}>
                       <button
                         onClick={() => toggleTask(task.id)}
                         aria-label={isCompleted ? "Mark lesson as incomplete" : "Mark lesson as complete"}
