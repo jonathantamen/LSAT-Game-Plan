@@ -13,16 +13,20 @@ export function About() {
           About the Creator
         </h1>
         <p className="mt-4 text-xl text-slate-500 max-w-2xl mx-auto">
-          Meet Jonathan Tamen, the mind behind LSAT Game Plan.
+          Meet Jonathan Tamen, creator of the high-efficiency LSAT Master method.
         </p>
       </div>
 
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 mb-12 transform transition-all hover:shadow-2xl">
-        <div className="md:flex">
-          <div className="md:flex-shrink-0 bg-gradient-to-br from-blue-600 to-indigo-700 md:w-64 flex items-center justify-center p-8">
-             <Target className="h-24 w-24 text-white opacity-90" />
+        <div className="md:flex items-center gap-4">
+          <div className="md:flex-shrink-0 md:w-80 p-8">
+            <img 
+              src="/profile.jpg" 
+              alt="Jonathan Tamen" 
+              className="rounded-2xl shadow-lg w-full h-auto object-cover aspect-square border-4 border-slate-50"
+            />
           </div>
-          <div className="p-8 md:p-12 flex flex-col justify-center">
+          <div className="p-8 md:py-12 md:pr-12 flex flex-col justify-center">
             <div className="uppercase tracking-wide text-sm text-blue-600 font-bold mb-2">
               Founder & Creator
             </div>
@@ -49,7 +53,7 @@ export function About() {
             <Target className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 mb-3">My Mission</h3>
-          <p className="text-slate-500 leading-relaxed">To provide accessible, high-quality LSAT preparation tools that focus on core logic and problem-solving skills.</p>
+          <p className="text-slate-500 leading-relaxed">To empower students by teaching them how to study efficiently, focusing on high-impact logic strategies that maximize score growth while minimizing wasted effort.</p>
         </div>
         
         <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
@@ -57,7 +61,7 @@ export function About() {
             <BookOpen className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 mb-3">The Approach</h3>
-          <p className="text-slate-500 leading-relaxed">Step-by-step breakdowns, visual task tracking, and focused practice sessions designed to build true proficiency.</p>
+          <p className="text-slate-500 leading-relaxed">Focus on high-yield logical patterns and efficient problem-solving frameworks that build true mastery without the burnout.</p>
         </div>
         
         <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
@@ -65,7 +69,7 @@ export function About() {
             <Award className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 mb-3">Your Success</h3>
-          <p className="text-slate-500 leading-relaxed">I measure my success by your success. Every feature of this platform is geared towards maximizing your score.</p>
+          <p className="text-slate-500 leading-relaxed">I measure success by your score growth and time saved. Every tool here is optimized to help you master the LSAT efficiently.</p>
         </div>
       </div>
 
