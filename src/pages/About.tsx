@@ -13,20 +13,20 @@ export function About() {
           About the Creator
         </h1>
         <p className="mt-4 text-xl text-slate-500 max-w-2xl mx-auto">
-          Meet Jonathan Tamen, creator of the high-efficiency LSAT Master method.
+          I am Jonathan Tamen, an LSAT (Law School Admission Test) tutor and creator of this high-efficiency, 10-Step LSAT method.
         </p>
       </div>
 
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100 mb-12 transform transition-all hover:shadow-2xl">
-        <div className="md:flex items-center gap-4">
-          <div className="md:flex-shrink-0 md:w-80 p-8">
-            <img 
-              src="/profile.jpg" 
-              alt="Jonathan Tamen" 
-              className="rounded-2xl shadow-lg w-full h-auto object-cover aspect-square border-4 border-slate-50"
+        <div className="flex flex-col items-center text-center p-8 md:p-12">
+          <div className="w-full max-w-xs mb-8">
+            <img
+              src="/profile.jpg"
+              alt="Jonathan Tamen"
+              className="rounded-2xl shadow-lg w-full h-auto object-cover aspect-square border-4 border-slate-50 mx-auto"
             />
           </div>
-          <div className="p-8 md:py-12 md:pr-12 flex flex-col justify-center">
+          <div className="max-w-2xl">
             <div className="uppercase tracking-wide text-sm text-blue-600 font-bold mb-2">
               Founder & Creator
             </div>
@@ -41,7 +41,7 @@ export function About() {
               I spent a great deal of time using different study platforms, books, and strategies during my 13 months of studying. Now, that doesn’t mean I was studying intensely for all 13 months, but it does mean I have learned the LSAT approach of many different instructors and sources. Do not make this same mistake.
             </p>
             <p className="text-slate-600 leading-relaxed text-lg">
-              Stick to as simple as possible of a study plan, like the one I explain in this site. With my 10-Step LSAT Studying, I made the greatest improvements, beyond any help from the diverse instructor sources I used in between.
+              Stick to as simple as possible of a study plan, like the one I explain in this site. With my 10-Step LSAT method, I made the greatest improvements, beyond any help from the diverse instructor sources I used in between.
             </p>
           </div>
         </div>
@@ -53,23 +53,23 @@ export function About() {
             <Target className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 mb-3">My Mission</h3>
-          <p className="text-slate-500 leading-relaxed">To empower students by teaching them how to study efficiently, focusing on high-impact logic strategies that maximize score growth while minimizing wasted effort.</p>
+          <p className="text-slate-500 leading-relaxed">To empower students by teaching them how to study for the LSAT efficiently, by focusing on logical skills to maximize score growth while minimizing wasted effort.</p>
         </div>
-        
+
         <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
           <div className="bg-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
             <BookOpen className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 mb-3">The Approach</h3>
-          <p className="text-slate-500 leading-relaxed">Focus on high-yield logical patterns and efficient problem-solving frameworks that build true mastery without the burnout.</p>
+          <p className="text-slate-500 leading-relaxed"> I want you to focus on high-level logic and a problem-solving framework that works across all question types and sections.</p>
         </div>
-        
+
         <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
           <div className="bg-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
             <Award className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
           <h3 className="text-xl font-bold text-slate-900 mb-3">Your Success</h3>
-          <p className="text-slate-500 leading-relaxed">I measure success by your score growth and time saved. Every tool here is optimized to help you master the LSAT efficiently.</p>
+          <p className="text-slate-500 leading-relaxed">I want to help you reach <i>mastery</i> of the LSAT as <i>efficiently</i> as possible.</p>
         </div>
       </div>
 
@@ -78,14 +78,14 @@ export function About() {
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-blue-50 rounded-xl p-8 border border-blue-100 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-bold text-slate-900 mb-4 whitespace-nowrap">1. Regular Tutoring</h3>
-            <p className="text-slate-600 mb-6">If you would like to schedule a regular tutoring session with me, please use this link.</p>
+            <p className="text-slate-600 mb-6">If you would like to schedule a regular tutoring session with me, please use this link to schedule time in my Google calendar.</p>
             <a href="https://calendar.app.google/pWNGSULiryw7kTiG8" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-600 font-bold hover:text-blue-700">
               Schedule a Session <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
           <div className="bg-indigo-50 rounded-xl p-8 border border-indigo-100 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-bold text-slate-900 mb-4 whitespace-nowrap">2. Study Advice</h3>
-            <p className="text-slate-600 mb-6">If you would like to read more about my LSAT study experience and the advice I would give to future test takers, please follow here.</p>
+            <p className="text-slate-600 mb-6">If you would like to read more about my LSAT study experience and the advice I would give to future test takers, please follow here to view my 10-Step LSAT method and more.</p>
             <Link to="/student" className="inline-flex items-center text-indigo-600 font-bold hover:text-indigo-700">
               Read More <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
