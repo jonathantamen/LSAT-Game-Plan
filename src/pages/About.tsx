@@ -38,9 +38,12 @@ export function About() {
               In approximately 13 months of studying, I made perhaps one of the greatest jumps in LSAT scores, and <strong>anyone can achieve similar growth with proper studying.</strong> I created this tutoring platform because I wanted to share my experience and hopefully help the next person (since I am already going to law school, you are no longer my competition and I will happily help you).
             </p>
             <p className="text-slate-600 leading-relaxed mb-6 text-lg">
-              I spent a great deal of time using different study platforms, books, and strategies during my 13 months of studying. Now, that doesn’t mean I was studying intensely for all 13 months, but it does mean I have learned the LSAT approach of many different instructors and sources. Do not make this same mistake.
+              I spent a great deal of time using different study platforms, books, and strategies during my time studying. Now, I was not studying intensely for all 13 months, but I did learn the LSAT approach of many different instructors and sources. Do not make this same mistake.
             </p>
-            <p className="text-slate-600 leading-relaxed text-lg">
+            <p className="text-slate-600 leading-relaxed mb-6 text-lg">
+              <em>But didn't it work for you, Jonathan?</em> Yes, I guess it did. But it took me 13 months of studying, and I still ended up using this approach I explain. With the right approach, you can achieve similar growth in a much shorter amount of time. <strong>Thus, saving you time and money.</strong>
+            </p>
+            <p className="text-slate-600 leading-relaxed mb-6 text-lg">
               Stick to as simple as possible of a study plan, like the one I explain in this site. With my 10-Step LSAT method, I made the greatest improvements, beyond any help from the diverse instructor sources I used in between.
             </p>
           </div>
@@ -48,7 +51,7 @@ export function About() {
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 mb-16">
-        <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+        <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
           <div className="bg-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
             <Target className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
@@ -56,7 +59,7 @@ export function About() {
           <p className="text-slate-500 leading-relaxed">To empower students by teaching them how to study for the LSAT efficiently, by focusing on logical skills to maximize score growth while minimizing wasted effort.</p>
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+        <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
           <div className="bg-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
             <BookOpen className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>
@@ -64,7 +67,7 @@ export function About() {
           <p className="text-slate-500 leading-relaxed"> I want you to focus on high-level logic and a problem-solving framework that works across all question types and sections.</p>
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+        <div className="bg-slate-50 rounded-xl p-8 border border-slate-100 hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center text-center">
           <div className="bg-blue-100 w-16 h-16 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
             <Award className="h-8 w-8 text-blue-600 group-hover:text-white transition-colors" />
           </div>

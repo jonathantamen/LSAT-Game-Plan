@@ -22,7 +22,7 @@ export function StudentDashboard() {
     // Listen to global tasks
     const tasksQuery = query(collection(db, 'tasks'), orderBy('order', 'asc'));
     const unsubscribeTasks = onSnapshot(
-      tasksQuery, 
+      tasksQuery,
       (snapshot) => {
         const tasksData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Task));
         setTasks(tasksData);
@@ -39,7 +39,7 @@ export function StudentDashboard() {
       // Listen to user's personal progress
       const progressRef = collection(db, 'users', user.uid, 'progress');
       unsubscribeProgress = onSnapshot(
-        progressRef, 
+        progressRef,
         (snapshot) => {
           const completedIds = new Set(snapshot.docs.map(doc => doc.id));
           setCompletedTaskIds(completedIds);
@@ -91,7 +91,7 @@ export function StudentDashboard() {
   const categories = useMemo(() => {
     return ['All', ...Array.from(new Set(tasks.map(t => t.category || 'Uncategorized'))).filter(Boolean)];
   }, [tasks]);
-  
+
   const filteredTasks = useMemo(() => {
     return selectedCategory === 'All'
       ? tasks
@@ -162,8 +162,8 @@ export function StudentDashboard() {
               onClick={() => setSelectedCategory(category)}
               className={cn(
                 "w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center justify-between",
-                selectedCategory === category 
-                  ? "bg-slate-100 text-black" 
+                selectedCategory === category
+                  ? "bg-slate-100 text-black"
                   : "bg-white text-slate-500 hover:bg-slate-50 hover:text-black"
               )}
             >
@@ -223,7 +223,7 @@ export function StudentDashboard() {
                         </span>
                       )}
                     </div>
-                    
+
                     {task.description && !isCompleted && (
                       <div className="prose prose-slate prose-blue max-w-none prose-p:leading-relaxed">
                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -234,9 +234,9 @@ export function StudentDashboard() {
 
                     {task.linkUrl && !isCompleted && (
                       <div className="pt-2">
-                        <a 
-                          href={task.linkUrl} 
-                          target="_blank" 
+                        <a
+                          href={task.linkUrl}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 px-5 py-2.5 text-sm rounded-lg font-semibold transition-all bg-slate-900 text-white hover:bg-blue-600 hover:shadow-sm"
                         >
@@ -247,24 +247,30 @@ export function StudentDashboard() {
                     )}
 
                     <div className={cn(
-                      "flex items-center gap-3",
+                      "flex items-stretch",
                       !isCompleted && "pt-4 mt-2 border-t border-slate-100"
                     )}>
                       <button
+                        type="button"
                         onClick={() => toggleTask(task.id)}
                         aria-label={isCompleted ? "Mark lesson as incomplete" : "Mark lesson as complete"}
                         title={isCompleted ? "Mark lesson as incomplete" : "Mark lesson as complete"}
-                        className="flex-shrink-0 transition-all hover:scale-110 focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500 rounded-full"
+                        className="flex items-center gap-3 transition-all group focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-blue-500 rounded-lg -ml-2 p-2 hover:bg-slate-50 w-full text-left"
                       >
-                        {isCompleted ? (
-                          <CheckCircle2 className="h-7 w-7 text-green-500 fill-green-50" />
-                        ) : (
-                          <Circle className="h-7 w-7 text-slate-300 group-hover:text-blue-400" />
-                        )}
+                        <div className="flex-shrink-0 transition-transform group-hover:scale-110">
+                          {isCompleted ? (
+                            <CheckCircle2 className="h-7 w-7 text-green-500 fill-green-50" />
+                          ) : (
+                            <Circle className="h-7 w-7 text-slate-300 group-hover:text-blue-400" />
+                          )}
+                        </div>
+                        <span className={cn(
+                          "text-sm font-medium transition-colors",
+                          isCompleted ? "text-slate-500 group-hover:text-slate-700" : "text-slate-500 group-hover:text-blue-600"
+                        )}>
+                          {isCompleted ? "Completed" : "Mark as complete"}
+                        </span>
                       </button>
-                      <span className="text-sm font-medium text-slate-500">
-                        {isCompleted ? "Completed" : "Mark as complete"}
-                      </span>
                     </div>
                   </div>
                 </motion.div>
