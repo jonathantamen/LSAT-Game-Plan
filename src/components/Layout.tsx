@@ -80,8 +80,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       <footer className="py-6 text-center text-sm text-slate-500 border-t border-slate-100">
-        <p className="font-bold text-slate-900">LSAT Game Plan</p>
-        <p>copyright by Jonathan Tamen 2026</p>
+        <p>© by Jonathan Tamen</p>
       </footer>
     </div>
   );

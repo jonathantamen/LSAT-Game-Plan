@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { GraduationCap, Users, ArrowRight, BookOpen, CheckCircle2, Clock } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -9,10 +9,6 @@ export function Home() {
   const navigate = useNavigate();
 
   if (loading) return null;
-  if (user && profile) {
-    return <Navigate to={profile.role === 'admin' ? '/tutor' : '/student'} replace />;
-  }
-
 
 
   return (
