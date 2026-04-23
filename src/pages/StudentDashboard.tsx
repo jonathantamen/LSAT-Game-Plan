@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { collection, query, onSnapshot, orderBy, doc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useAuth } from '../AuthContext';
 import { Task } from '../types';
 import { CheckCircle2, Circle, BookOpen, Trophy, Clock, ExternalLink } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -11,14 +10,23 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 export function StudentDashboard() {
-  const { user } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [completedTaskIds, setCompletedTaskIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
 
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   useEffect(() => {
+    // Load local progress
+    const savedProgress = localStorage.getItem('lsat_progress');
+    if (savedProgress) {
+      try {
+        setCompletedTaskIds(new Set(JSON.parse(savedProgress)));
+      } catch (e) {
+        console.error('Error parsing progress', e);
+      }
+    }
+
     // Listen to global tasks
     const tasksQuery = query(collection(db, 'tasks'), orderBy('order', 'asc'));
     const unsubscribeTasks = onSnapshot(
@@ -26,76 +34,50 @@ export function StudentDashboard() {
       (snapshot) => {
         const tasksData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Task));
         setTasks(tasksData);
-        if (!user) setLoading(false);
+        setLoading(false);
       },
       (error) => {
         console.error("Error fetching tasks:", error);
-        if (!user) setLoading(false);
+        setLoading(false);
       }
     );
 
-    let unsubscribeProgress: () => void;
-    if (user) {
-      // Listen to user's personal progress
-      const progressRef = collection(db, 'users', user.uid, 'progress');
-      unsubscribeProgress = onSnapshot(
-        progressRef,
-        (snapshot) => {
-          const completedIds = new Set(snapshot.docs.map(doc => doc.id));
-          setCompletedTaskIds(completedIds);
-          setLoading(false);
-        },
-        (error) => {
-          console.error("Error fetching progress:", error);
-          setLoading(false);
-        }
-      );
-    } else {
-      setCompletedTaskIds(new Set());
-    }
-
     return () => {
       unsubscribeTasks();
-      if (unsubscribeProgress) unsubscribeProgress();
     };
-  }, [user]);
+  }, []);
 
   const toggleTask = async (taskId: string) => {
-    if (!user) {
-      toast.error('Log in to save your progress!');
-      return;
-    }
     const isCompleted = completedTaskIds.has(taskId);
-    const progressDocRef = doc(db, 'users', user.uid, 'progress', taskId);
-
-    try {
+    
+    setCompletedTaskIds(prev => {
+      const newIds = new Set(prev);
       if (isCompleted) {
-        await deleteDoc(progressDocRef);
+        newIds.delete(taskId);
         toast.success('Task marked as incomplete');
       } else {
-        await setDoc(progressDocRef, {
-          userId: user.uid,
-          taskId: taskId,
-          completedAt: serverTimestamp(),
-        });
+        newIds.add(taskId);
         toast.success('Task completed! Keep it up!');
       }
-    } catch (error) {
-      console.error('Error toggling task:', error);
-      toast.error('Failed to update progress');
-    }
+      localStorage.setItem('lsat_progress', JSON.stringify(Array.from(newIds)));
+      return newIds;
+    });
   };
 
   const progress = tasks.length > 0 ? Math.round((completedTaskIds.size / tasks.length) * 100) : 0;
 
   const categories = useMemo(() => {
-    return ['All', ...Array.from(new Set(tasks.map(t => t.category || 'Uncategorized'))).filter(Boolean)];
+    return Array.from(new Set(tasks.map(t => t.category || 'Uncategorized'))).filter(Boolean);
   }, [tasks]);
 
+  useEffect(() => {
+    if (categories.length > 0 && !categories.includes(selectedCategory)) {
+      setSelectedCategory(categories[0]);
+    }
+  }, [categories, selectedCategory]);
+
   const filteredTasks = useMemo(() => {
-    return selectedCategory === 'All'
-      ? tasks
-      : tasks.filter(t => (t.category || 'Uncategorized') === selectedCategory);
+    return tasks.filter(t => (t.category || 'Uncategorized') === selectedCategory);
   }, [tasks, selectedCategory]);
 
   return (
@@ -103,8 +85,8 @@ export function StudentDashboard() {
       <header className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">LSAT Study Guide</h2>
-            <p className="text-slate-500 font-medium">Master the LSAT one step at a time.</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Jonathan's Study Plan</h2>
+            <p className="text-slate-500 font-medium">Master the LSAT one step at a time with my personal plan.</p>
           </div>
           <div className="flex items-center gap-6">
             <div className="text-right">
@@ -168,14 +150,12 @@ export function StudentDashboard() {
               )}
             >
               <span className="truncate">{category}</span>
-              {category !== 'All' && (
-                <span className={cn(
-                  "text-[10px] py-0.5 px-2 rounded-full",
-                  selectedCategory === category ? "bg-slate-200 text-black" : "bg-slate-100 text-slate-400"
-                )}>
-                  {tasks.filter(t => (t.category || 'Uncategorized') === category).length}
-                </span>
-              )}
+              <span className={cn(
+                "text-[10px] py-0.5 px-2 rounded-full",
+                selectedCategory === category ? "bg-slate-200 text-black" : "bg-slate-100 text-slate-400"
+              )}>
+                {tasks.filter(t => (t.category || 'Uncategorized') === category).length}
+              </span>
             </button>
           ))}
         </div>
@@ -214,14 +194,6 @@ export function StudentDashboard() {
                       )}>
                         {task.title}
                       </h4>
-                      {selectedCategory === 'All' && task.category && (
-                        <span className={cn(
-                          "inline-block mt-1 text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded",
-                          isCompleted ? "bg-slate-100 text-slate-400" : "bg-blue-50 text-blue-600"
-                        )}>
-                          {task.category}
-                        </span>
-                      )}
                     </div>
 
                     {task.description && !isCompleted && (

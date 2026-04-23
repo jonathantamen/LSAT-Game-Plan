@@ -76,25 +76,7 @@ export function About() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 mb-16 p-8 md:p-12">
-        <h2 className="text-3xl font-extrabold text-slate-900 mb-8 text-center">How can I help?</h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-blue-50 rounded-xl p-8 border border-blue-100 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-bold text-slate-900 mb-4 whitespace-nowrap">1. Regular Tutoring</h3>
-            <p className="text-slate-600 mb-6">If you would like to schedule a regular tutoring session with me, please use this link to schedule time in my Google calendar.</p>
-            <a href="https://calendar.app.google/pWNGSULiryw7kTiG8" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-blue-600 font-bold hover:text-blue-700">
-              Schedule a Session <ArrowRight className="ml-2 h-4 w-4" />
-            </a>
-          </div>
-          <div className="bg-indigo-50 rounded-xl p-8 border border-indigo-100 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-bold text-slate-900 mb-4 whitespace-nowrap">2. Study Advice</h3>
-            <p className="text-slate-600 mb-6">If you would like to read more about my LSAT study experience and the advice I would give to future test takers, please follow here to view my 10-Step LSAT method and more.</p>
-            <Link to="/student" className="inline-flex items-center text-indigo-600 font-bold hover:text-indigo-700">
-              Read More <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      </div>
+
 
       <div className="text-center bg-blue-50 rounded-3xl p-12 border border-blue-100">
         <h3 className="text-2xl font-bold text-slate-900 mb-6">Ready to start your journey?</h3>

@@ -133,8 +133,8 @@ export function TutorDashboard() {
     <div className="max-w-4xl mx-auto space-y-8">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900">LSAT Guide Manager</h2>
-          <p className="text-slate-500 mt-1">Curate the master study plan for all students.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Study Plan Manager</h2>
+          <p className="text-slate-500 mt-1">Curate the study plan for my students.</p>
         </div>
         <div className="flex items-center gap-3">
           <Link
