@@ -3,13 +3,13 @@ import { collection, query, onSnapshot, addDoc, serverTimestamp, deleteDoc, doc,
 import { db } from '../firebase';
 import { useAuth } from '../AuthContext';
 import { Task } from '../types';
-import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye, Download, Upload } from 'lucide-react';
+import { Plus, Trash2, Edit2, GripVertical, BookOpen, Layout, Eye, Download, Upload, FileUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'react-hot-toast';
 
 export function TutorDashboard() {
-  const { user } = useAuth();
+  const { user, signIn, logout } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -59,6 +59,48 @@ export function TutorDashboard() {
       console.error('Error saving task:', error);
       toast.error('Failed to save task');
     }
+  };
+
+  const handleBulkUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    let successCount = 0;
+    
+    for (const file of files) {
+      if (!file.name.endsWith('.md')) continue;
+      
+      await new Promise<void>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const text = event.target?.result;
+          if (typeof text === 'string') {
+            const title = file.name.replace(/\.md$/i, '');
+            try {
+              await addDoc(collection(db, 'tasks'), {
+                title: title,
+                description: text,
+                category: 'Imported',
+                order: tasks.length + successCount,
+                createdAt: serverTimestamp(),
+              });
+              successCount++;
+            } catch (err) {
+              console.error('Error saving task:', err);
+            }
+          }
+          resolve();
+        };
+        reader.readAsText(file);
+      });
+    }
+    
+    if (successCount > 0) {
+      toast.success(`Added ${successCount} tasks from markdown!`);
+    } else {
+      toast.error('No valid markdown files found.');
+    }
+    e.target.value = '';
   };
 
   const handleDelete = async (id: string) => {
@@ -129,6 +171,21 @@ export function TutorDashboard() {
     toast.success('Tasks exported to CSV');
   };
 
+  if (!user) {
+    return (
+      <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-3xl border border-slate-200 shadow-xl text-center">
+        <h2 className="text-2xl font-bold text-slate-900 mb-2">Admin Login</h2>
+        <p className="text-slate-500 mb-6">Sign in with your Google account to manage the study plan.</p>
+        <button 
+          onClick={signIn} 
+          className="w-full bg-slate-900 text-white font-semibold py-3 rounded-xl hover:bg-slate-800 transition-colors"
+        >
+          Sign in with Google
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -137,6 +194,12 @@ export function TutorDashboard() {
           <p className="text-slate-500 mt-1">Curate the study plan for my students.</p>
         </div>
         <div className="flex items-center gap-3">
+          <button
+            onClick={logout}
+            className="bg-white text-slate-700 border border-slate-200 px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 transition-all flex items-center gap-2"
+          >
+            Logout
+          </button>
           <Link
             to="/student"
             className="bg-white text-slate-700 border border-slate-200 px-6 py-3 rounded-xl font-semibold hover:bg-slate-50 transition-all flex items-center gap-2"
@@ -144,6 +207,17 @@ export function TutorDashboard() {
             <Eye className="h-5 w-5" />
             View as Student
           </Link>
+          <label className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200 flex items-center gap-2 cursor-pointer">
+            <FileUp className="h-5 w-5" />
+            Bulk Import .md
+            <input
+              type="file"
+              accept=".md,text/markdown"
+              multiple
+              className="hidden"
+              onChange={handleBulkUpload}
+            />
+          </label>
           <button
             onClick={() => {
               setIsAdding(true);

@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
 import { StudentDashboard } from './pages/StudentDashboard';
+import { TutorDashboard } from './pages/TutorDashboard';
 import { About } from './pages/About';
 
 import { Toaster } from 'react-hot-toast';
@@ -21,6 +22,8 @@ export default function App() {
                 <StudentDashboard />
               }
             />
+
+            <Route path="/manage-plan" element={<TutorDashboard />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

@@ -19,10 +19,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
               </Link>
               <nav className="hidden md:flex gap-6">
                 <Link to="/about" className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">
-                  About
+                  About Me
                 </Link>
                 <Link to="/student" className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">
                   Study Plan
+                </Link>
+                <Link to="/manage-plan" className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">
+                  Admin Login
                 </Link>
               </nav>
             </div>
@@ -36,7 +39,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       <footer className="py-6 text-center text-sm text-slate-500 border-t border-slate-100">
-        <p>© by Jonathan Tamen</p>
+        <p>Copyright © 2026 by Jonathan Tamen </p>
       </footer>
     </div>
   );
